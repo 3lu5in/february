@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>letter</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Times New Roman", Times, serif;
+      color: #FFD15E;
+    }
+
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff3f6;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .card {
+      text-align: center;
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      width: 400px;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      position: relative;
+      height: 60px;
+    }
+
+    button {
+      padding: 12px 28px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      position: relative;
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    #yes {
+      background: #FAE041;
+      color: #fff9cf;
+    }
+
+    #no {
+      background: #FFC14F;
+      color: #fff9cf;
+    }
+
+    .message-box {
+      background: #fff;
+      padding: 30px 50px;
+      border-radius: 16px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      width: 520px; 
+      text-align: center;
+      display: none;
+    }
+
+    .message-box h2 {
+      margin: 0;
+      color: #FFC14F;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="card">
+      <h1>will you be my valentine?</h1>
+      <p>--> try clicking 'no' (ｰ̀⤙ｰ́ )</p>
+
+      <div class="buttons">
+        <button id="yes">YES</button>
+        <button id="no">NO</button>
+      </div>
+    </div>
+
+    <div class="message-box" id="result">
+      <h2>https://14444333.my.canva.site/</h2>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const result = document.getElementById("result");
+    const container = document.querySelector(".buttons");
+
+    noBtn.addEventListener("mouseenter", () => {
+      const containerRect = container.getBoundingClientRect();
+      const yesRect = yesBtn.getBoundingClientRect();
+      const noRect = noBtn.getBoundingClientRect();
+
+      let x, y;
+      let attempts = 0;
+
+      do {
+        const maxX = containerRect.width - noRect.width;
+        const maxY = 30;
+
+        x = Math.random() * maxX - maxX / 2;
+        y = Math.random() * maxY;
+
+        const noFutureX = noRect.left + x;
+        const noFutureY = noRect.top + y;
+        const buffer = 40;
+
+        var overlapsYes =
+          noFutureX < yesRect.right + buffer &&
+          noFutureX + noRect.width > yesRect.left - buffer &&
+          noFutureY < yesRect.bottom + buffer &&
+          noFutureY + noRect.height > yesRect.top - buffer;
+
+        attempts++;
+      } while (overlapsYes && attempts < 10);
+
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      document.querySelector(".buttons").style.display = "none";
+      result.style.display = "block";
+    });
+  </script>
+
+</body>
+</html>
